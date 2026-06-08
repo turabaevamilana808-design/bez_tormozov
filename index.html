@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Автошкола «Без Тормозов» | Категории C, D и B | Вождение в удовольствие</title>
+    <meta name="description" content="Обучение на категории C (грузовики) и D (автобусы), а также B, A, повышение мастерства. Профессионально, креативно, с душой.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #fff0f5 0%, #e0f7ff 100%);
+            color: #1a1a2e;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            z-index: 100;
+            padding: 0.8rem 2rem;
+            transition: all 0.3s;
+        }
+
+        .header:hover {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        .logo-wrapper:hover {
+            transform: scale(1.02);
+        }
+
+        .logo-img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+            transition: all 0.3s;
+        }
+        .logo-img:hover {
+            box-shadow: 0 6px 18px rgba(0, 150, 255, 0.4);
+            transform: rotate(5deg);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: -0.3px;
+            background: linear-gradient(120deg, #d43f8f, #3a86ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .logo-text span {
+            font-weight: 500;
+            background: linear-gradient(120deg, #3a86ff, #d43f8f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            list-style: none;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2c2c5e;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0.4rem 0;
+            font-family: inherit;
+            position: relative;
+        }
+
+        .nav-btn:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, #ff9a9e, #fad0c4, #fad0c4, #a1c4fd);
+            transition: width 0.3s;
+            border-radius: 3px;
+        }
+
+        .nav-btn:hover:after, .nav-btn.active:after {
+            width: 100%;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            color: #ff477e;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+            flex: 1;
+        }
+
+        .page {
+            display: none;
+            animation: floatIn 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .page.active-page {
+            display: block;
+        }
+
+        @keyframes floatIn {
+            from { opacity: 0; transform: translateY(25px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(125deg, #e84393, #1e88e5);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .slogan {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 0.5rem 0 1rem;
+            background: linear-gradient(145deg, #ffb347, #ff6b6b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #c44569, #2d86cc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            border-left: 5px solid #ff9eb5;
+            padding-left: 1rem;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0 2.5rem;
+            background: rgba(255,255,240,0.6);
+            padding: 2rem;
+            border-radius: 48px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #2c2c5e;
+            max-width: 700px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(95deg, #ff7eb3, #ff758c);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 71, 126, 0.5);
+            background: linear-gradient(95deg, #ff6b9d, #ff5a7a);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ff7eb3;
+            color: #ff477e;
+            box-shadow: none;
+        }
+        .btn-outline:hover {
+            background: #ff7eb3;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 1.8rem;
+            border-radius: 32px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.85);
+            border-color: #ffc0d0;
+            box-shadow: 0 20px 30px rgba(231, 76, 119, 0.2);
+        }
+
+        .price {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0.8rem 0;
+            background: linear-gradient(145deg, #d43f8f, #3a86ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .contact-detail {
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 30px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            background: rgba(255,255,255,0.8);
+            transition: 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #ff7eb3;
+            box-shadow: 0 0 0 3px rgba(255, 126, 179, 0.2);
+            background: white;
+        }
+
+        .feedback-message {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.85rem;
+            color: #555;
+            background: rgba(255,255,240,0.5);
+            backdrop-filter: blur(4px);
+            margin-top: auto;
+            border-top: 1px solid rgba(255,255,255,0.7);
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,240,245,0.8);
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #d43f8f;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .social-link:hover {
+            background: #ffdee8;
+            transform: scale(1.02);
+            color: #ff1e6c;
+        }
+
+        .map-container {
+            margin-top: 1.5rem;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+        }
+
+        .video-container {
+            margin-top: 3rem;
+            text-align: center;
+            background: rgba(0,0,0,0.05);
+            border-radius: 48px;
+            padding: 2rem;
+        }
+        .video-container video {
+            border-radius: 24px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+            max-width: 100%;
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #fff0f5, #e0f7ff);
+            border-radius: 32px;
+            max-width: 500px;
+            width: 90%;
+            padding: 2rem;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #d43f8f;
+            transition: 0.2s;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-close:hover {
+            background: rgba(0,0,0,0.1);
+            transform: scale(1.1);
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(125deg, #e84393, #1e88e5);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            padding-right: 30px;
+        }
+
+        .modal-body {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #2c2c5e;
+        }
+
+        .modal-body ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .modal-body li {
+            margin: 0.5rem 0;
+        }
+
+        @media (max-width: 800px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            h1 { font-size: 2rem; }
+            .slogan { font-size: 1.2rem; }
+            .container { padding: 1rem; }
+            .hero { padding: 1rem; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+            .modal-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=ваш_ключ&lang=ru_RU" type="text/javascript"></script>
+    <script>
+        const enterpriseLat = 55.744389;
+        const enterpriseLon = 37.563853;
+        
+        function initMap() {
+            const map = new ymaps.Map('yandexMap', {
+                center: [enterpriseLat, enterpriseLon],
+                zoom: 18,
+                controls: ['zoomControl', 'fullscreenControl']
+            });
+            const placemark = new ymaps.Placemark([enterpriseLat, enterpriseLon], {
+                balloonContentHeader: '<strong>🚗 Автошкола «Без Тормозов»</strong>',
+                balloonContentBody: '<strong>📍 Адрес:</strong> г. Москва, Брянская улица, 2<br>' +
+                                    '<strong>📞 Телефон:</strong> <a href="tel:+79878452995">+7 (987) 845-29-95</a><br>' +
+                                    '<strong>✉️ Email:</strong> <a href="mailto:Bez_tormozov@bk.ru">Bez_tormozov@bk.ru</a>',
+                balloonContentFooter: '🕒 Режим работы: ежедневно 9:00–21:00',
+                hintContent: 'Автошкола «Без Тормозов»'
+            }, {
+                preset: 'islands#greenDotIconWithDot',
+                openBalloonOnClick: true
+            });
+            map.geoObjects.add(placemark);
+            placemark.balloon.open();
+        }
+        ymaps.ready(initMap);
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo-wrapper" id="logoLink">
+                <img src="https://s10.iimage.su/s/30/th_gFdx3shxh9YLfBd2zOJi2UduZ03ZfOtlXjuWvt66l.jpg" alt="Логотип Автошколы Без Тормозов" class="logo-img">
+                <div class="logo-text">Без Тормозов<span> | автошкола</span></div>
+            </a>
+            <ul class="nav-links">
+                <li><button class="nav-btn" data-page="home">Главная</button></li>
+                <li><button class="nav-btn" data-page="about">О компании</button></li>
+                <li><button class="nav-btn" data-page="services">Услуги</button></li>
+                <li><button class="nav-btn" data-page="contacts">Контакты</button></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- ГЛАВНАЯ СТРАНИЦА -->
+        <div id="home-page" class="page active-page">
+            <div class="hero">
+                <h1>Автошкола «Без Тормозов»</h1>
+                <div class="slogan">🚛 Вождение «Без Тормозов» — в удовольствие! 🚌</div>
+                <p>Профессиональное обучение водителей на категории A, B, C, D. Лицензированный центр, современный автопарк, опытные инструкторы. Драйв, знания и яркие эмоции за рулём.</p>
+                <div style="margin-top: 0.5rem;">
+                    <button class="btn" id="homeToContactBtn">✨ Записаться на курс ✨</button>
+                    <button class="btn btn-outline" id="homeToServicesBtn" style="margin-left: 1rem;">Узнать цены</button>
+                </div>
+            </div>
+            <div style="background: rgba(255,235,245,0.5); border-radius: 48px; padding: 2rem; margin: 1rem 0; backdrop-filter: blur(4px);">
+                <p style="font-size: 1rem;"><strong>Лицензия на образовательную деятельность</strong> № Л035-01298-77/00123456 от 15 марта 2024 г.<br>
+                ✅ Автомобили с МКПП и АКПП, дублирующие педали &nbsp; ✅ Учебные классы с тренажерами &nbsp; ✅ 92% сдачи экзамена с первого раза</p>
+            </div>
+            <div style="margin-top: 3rem;">
+                <h2>Почему выбирают нас</h2>
+                <div class="grid-cards" id="why-us-cards">
+                    <div class="card" data-modal-title="🎓 5000+ выпускников" data-modal-body="Мы гордимся нашими выпускниками!<br><br>За 14 лет работы мы обучили более 5000 водителей. Многие из них работают в крупных транспортных компаниях, такси и логистических центрах. Наши ученики отмечают высокий уровень подготовки и индивидуальный подход. Более 90% наших выпускников рекомендуют автошколу друзьям и знакомым!">
+                        <strong>🎓 5000+ выпускников</strong><br>Более пяти тысяч водителей уже рулят уверенно.
+                    </div>
+                    <div class="card" data-modal-title="🚛 25+ учебных авто" data-modal-body="Наш автопарк постоянно обновляется!<br><br>В нашем распоряжении:<br>• 12 легковых автомобилей (Hyundai Solaris, Kia Rio, Lada Vesta) с МКПП и АКПП<br>• 8 грузовых автомобилей (КАМАЗ, MAN, ГАЗель NEXT) для категории C<br>• 5 автобусов (ПАЗ, ЛиАЗ, Mercedes Sprinter) для категории D<br>• 2 мотоцикла для категории A<br><br>Все автомобили оснащены дублирующими педалями для максимальной безопасности!">
+                        <strong>🚛 25+ учебных авто</strong><br>Легковые, грузовые и автобусы для любых категорий.
+                    </div>
+                    <div class="card" data-modal-title="🏆 92% с первого раза" data-modal-body="Наши методики действительно работают!<br><br>Почему наши ученики успешно сдают экзамены:<br>• Авторская программа обучения с психологической подготовкой<br>• Индивидуальный подход к каждому ученику<br>• Дополнительные занятия на тренажёрах перед экзаменом<br>• Пробные экзамены в условиях, приближенных к реальным<br>• Поддержка инструкторов на самом экзамене в ГИБДД<br><br>92% наших учеников получают права с первой попытки!">
+                        <strong>🏆 92% с первого раза</strong><br>Авторские методики + забота о каждом ученике.
+                    </div>
+                    <div class="card" data-modal-title="📚 Лицензированные программы" data-modal-body="Мы работаем официально и легально!<br><br>• Лицензия на образовательную деятельность № Л035-01298-77/00123456<br>• Все программы соответствуют регламенту ГИБДД<br>• Выдаём свидетельства об обучении государственного образца<br>• Помогаем с подготовкой документов для сдачи экзамена<br>• Работаем по договору — никаких скрытых платежей<br><br>Также мы имеем сертификаты качества и являемся лауреатами премии «Лучшая автошкола Москвы»!">
+                        <strong>📚 Лицензированные программы</strong><br>Полное соответствие регламенту ГИБДД.
+                    </div>
+                </div>
+            </div>
+
+            <!-- ВИДЕОРОЛИК НА ГЛАВНОЙ СТРАНИЦЕ -->
+            <div class="video-container">
+                <h3 style="margin-bottom: 1rem;">🎬 Наш рекламный ролик</h3>
+                <div style="display: flex; justify-content: center;">
+                    <video width="70%" controls poster="https://via.placeholder.com/800x450?text=Автошкола+Без+Тормозов">
+                        <source src="Рекламный ролик.mp4" type="video/mp4">
+                        <source src="file:///C:/Users/User/OneDrive/Рабочий%20стол/Практика/Рекламный%20ролик.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео.
+                    </video>
+                </div>
+                <p style="margin-top: 0.8rem; font-style: italic;">Вождение «Без Тормозов» — в удовольствие!</p>
+            </div>
+        </div>
+
+        <!-- СТРАНИЦА О КОМПАНИИ -->
+        <div id="about-page" class="page">
+            <h1>О компании</h1>
+            <div class="slogan" style="font-size:1.4rem;">💖 Учим водить с любовью и страстью к своему делу</div>
+            <p style="margin-bottom: 1rem; font-size: 1.05rem;">Автошкола «Без Тормозов» (ООО «Без Тормозов») работает с 2012 года, превращая обучение в увлекательное приключение. Мы создали атмосферу, где ученики не боятся ошибаться, а инструкторы становятся друзьями.</p>
+            <p style="margin-bottom: 1.5rem;">Наша миссия — показать, что вождение может приносить радость и уверенность, без стресса и страха. Интерактивные классы, авторские курсы и индивидуальный подход.</p>
+            
+            <h2>История и достижения</h2>
+            <p>За 14 лет выпустили более 5000 водителей. Автопарк из 25 авто, включая грузовики и автобусы. Каждый год мы внедряем новые методики, чтобы ученики чувствовали драйв от учёбы.</p>
+
+            <h2>Наши принципы</h2>
+            <div class="grid-cards" id="principles-cards">
+                <div class="card" data-modal-title="✨ Индивидуальный подход" data-modal-body="Мы считаем, что каждый ученик уникален!<br><br>Что мы предлагаем:<br>• Подбор инструктора с учётом вашего характера и темперамента<br>• Составление индивидуального графика занятий<br>• Проработка сложных тем в удобном для вас темпе<br>• Психологическая поддержка для неуверенных водителей<br>• Дополнительные занятия при необходимости<br><br>Вы не будете чувствовать себя «одним из многих» — мы работаем с каждым лично!">
+                    <strong>✨ Индивидуальный подход</strong><br>График и инструктор под ваш характер.
+                </div>
+                <div class="card" data-modal-title="🎮 Игровые технологии" data-modal-body="Учиться может быть весело!<br><br>В нашей автошколе мы используем современные технологии обучения:<br>• VR-симуляторы для отработки сложных ситуаций на дороге<br>• Интерактивные тренажёры для изучения ПДД<br>• Мобильное приложение с тестами и видеоуроками<br>• Обучающие игры для запоминания знаков и разметки<br>• Вебинары и онлайн-лекции<br><br>Технологии делают обучение эффективнее и интереснее!">
+                    <strong>🎮 Игровые технологии</strong><br>Тренажёры и VR-симуляторы для отработки навыков.
+                </div>
+                <div class="card" data-modal-title="💎 Прозрачность" data-modal-body="Никаких скрытых платежей и сюрпризов!<br><br>Мы ценим ваше доверие, поэтому:<br>• Фиксированная стоимость курса, зафиксированная в договоре<br>• Бесплатный первый урок для знакомства<br>• Возможность оплаты по частям или в рассрочку 0%<br>• Прозрачная система скидок и акций<br>• Выдача всех документов строго по договорённости<br>• Онлайн-отчёт о прогрессе обучения<br><br>Вы всегда знаете, за что платите, и получаете полную информацию!">
+                    <strong>💎 Прозрачность</strong><br>Фиксированная цена, договор, без скрытых платежей.
+                </div>
+                <div class="card" data-modal-title="🫂 Поддержка 24/7" data-modal-body="Мы всегда рядом, даже после получения прав!<br><br>Наша поддержка включает:<br>• Консультации по любым вопросам вождения<br>• Помощь в сложных дорожных ситуациях<br>• Чат выпускников для обмена опытом<br>• Бесплатные вебинары и мастер-классы для выпускников<br>• Скидки на повышение квалификации<br>• Помощь с трудоустройством для категорий C и D<br><br>Вы не останетесь один на один с вопросами — мы поддерживаем вас на всём пути!">
+                    <strong>🫂 Поддержка 24/7</strong><br>Помощь даже после получения прав.
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem; text-align: center;">
+                <button class="btn" id="aboutToContactBtn">📞 Записаться на пробное занятие</button>
+            </div>
+        </div>
+
+        <!-- УСЛУГИ + КАТЕГОРИИ C и D -->
+        <div id="services-page" class="page">
+            <h1>Обучение вождению</h1>
+            <div class="slogan" style="font-size:1.2rem;">Выбери свой маршрут к свободе: от легкового до автобуса</div>
+            <div class="grid-cards" id="services-cards">
+                <div class="card" data-modal-title="🚗 Категория «B» МКПП" data-modal-body="Полный курс обучения на легковом автомобиле с механической коробкой передач.<br><br><strong>📚 Программа курса:</strong><br>• 56 часов теории (ПДД, основы безопасности)<br>• 56 часов практического вождения с инструктором<br>• Занятия на автодроме (эстакада, змейка, параллельная парковка, развороты)<br>• Вождение в городских условиях<br>• Подготовка к экзамену в ГИБДД<br><br><strong>🎁 В подарок:</strong><br>• Доступ к онлайн-тренажёру ПДД на 3 месяца<br>• Светоотражающий брелок<br>• Консультация психолога перед экзаменом<br><br><strong>💰 Стоимость:</strong> 32 900 ₽ вместо 38 900 ₽ (акция!)">
+                    <h3>Категория «B» МКПП</h3><p>Теория + практика на механике. 56 ч теории, 56 ч практики.</p><div class="price">32 900 ₽ <span style="text-decoration: line-through;">38 900 ₽</span></div><button class="btn service-contact">Записаться</button>
+                </div>
+                <div class="card" data-modal-title="🚙 Категория «B» АКПП" data-modal-body="Обучение на автомобиле с автоматической коробкой передач — комфорт и удобство!<br><br><strong>📚 Программа курса:</strong><br>• 56 часов теории (ПДД, основы безопасности)<br>• 56 часов практики на автомобиле с АКПП<br>• Особенности управления автомобилем с автоматом<br>• Занятия на автодроме и в городе<br>• Подготовка к экзамену<br><br><strong>Преимущества АКПП:</strong><br>• Проще в обучении, особенно для новичков<br>• Меньше нагрузки при вождении в пробках<br>• Быстрое освоение навыков парковки<br><br><strong>💰 Стоимость:</strong> 34 500 ₽">
+                    <h3>Категория «B» АКПП</h3><p>Автомат — комфорт и лёгкость. 56 ч практики.</p><div class="price">34 500 ₽</div><button class="btn service-contact">Выбрать курс</button>
+                </div>
+                <div class="card" data-modal-title="🏍️ Категория «A» (мото)" data-modal-body="Станьте свободным как ветер — обучение управлению мотоциклом!<br><br><strong>📚 Программа курса:</strong><br>• 24 часа теории (ПДД для мотоциклистов, безопасность)<br>• 18 часов практики на площадке и в городе<br>• Экипировка предоставляется (шлем, защита)<br><br><strong>Что вы научитесь делать:</strong><br>• Трогаться и останавливаться<br>• Уверенно маневрировать на низкой скорости<br>• Выполнять упражнения (восьмёрка, змейка, коридор)<br>• Действовать в экстренных ситуациях<br><br><strong>🎁 Экипировка в подарок!</strong><br><br><strong>💰 Стоимость:</strong> 18 900 ₽">
+                    <h3>Категория «A» (мото)</h3><p>Свобода на двух колёсах. Экипировка в подарок.</p><div class="price">18 900 ₽</div><button class="btn service-contact">Оставить заявку</button>
+                </div>
+                <div class="card" data-modal-title="🚛 Категория «C» (грузовики)" data-modal-body="Профессиональное обучение на грузовые автомобили — востребованная профессия!<br><br><strong>📚 Программа курса:</strong><br>• 64 часа теории (ПДД, грузоперевозки, техника безопасности)<br>• 72 часа практики на грузовых автомобилях<br>• Обучение на автомобилях КАМАЗ и MAN<br><br><strong>Навыки, которые вы получите:</strong><br>• Управление грузовым автомобилем<br>• Особенности габаритов и манёвренности<br>• Погрузка/разгрузка и крепление груза<br>• Работа с тахографом и документацией<br><br><strong>💼 Перспективы:</strong> Работа в логистике, доставке, строительстве<br><br><strong>💰 Стоимость:</strong> 44 900 ₽">
+                    <h3>Категория «C» (грузовики)</h3><p>Обучение на грузовых автомобилях. Профориентация, практика на КАМАЗ, MAN. 72 часа практики.</p><div class="price">44 900 ₽</div><button class="btn service-contact">Записаться на C</button>
+                </div>
+                <div class="card" data-modal-title="🚌 Категория «D» (автобусы)" data-modal-body="Станьте профессиональным водителем автобуса — работа с людьми и ответственность!<br><br><strong>📚 Программа курса:</strong><br>• 64 часа теории (ПДД, пассажирские перевозки)<br>• 80 часов практики на автобусах (ПАЗ, ЛиАЗ, Mercedes Sprinter)<br><br><strong>Вы научитесь:</strong><br>• Управлять автобусом любого размера<br>• Соблюдать правила перевозки пассажиров<br>• Ориентироваться в городских маршрутах<br>• Действовать в нештатных ситуациях<br><br><strong>💼 Работа:</strong> Гарантированная помощь в трудоустройстве после окончания!<br><br><strong>💰 Стоимость:</strong> 52 900 ₽">
+                    <h3>Категория «D» (автобусы)</h3><p>Стань профессиональным водителем автобуса. Полный курс с правом работы в транспортных компаниях.</p><div class="price">52 900 ₽</div><button class="btn service-contact">Записаться на D</button>
+                </div>
+                <div class="card" data-modal-title="⚡ Повышение мастерства" data-modal-body="Для тех, кто уже умеет водить, но хочет стать профессионалом!<br><br><strong>🔥 Программы повышения мастерства:</strong><br><br>• <strong>Контраварийное вождение</strong> — как действовать в экстренных ситуациях, уход от столкновения, экстренное торможение<br>• <strong>Ночной город</strong> — особенности вождения в тёмное время суток, адаптация освещения<br>• <strong>Дрифт-уроки</strong> — управление заносом, контроль автомобиля на скользкой дороге<br>• <strong>Экстремальное вождение</strong> — скоростное маневрирование, сложные повороты<br><br><strong>Форматы:</strong> Индивидуальные занятия или групповые тренировки<br><br><strong>💰 Стоимость:</strong> от 1 200 ₽ / час">
+                    <h3>Повышение мастерства</h3><p>Контраварийное вождение, ночной город, дрифт-уроки.</p><div class="price">от 1 200 ₽ / час</div><button class="btn service-contact">Уточнить</button>
+                </div>
+                <div class="card" data-modal-title="📖 Подготовка к экзамену" data-modal-body="Интенсивная подготовка перед сдачей экзамена в ГИБДД!<br><br><strong>Для кого:</strong> Для тех, кто уже учился в другой автошколе, забыл навыки или хочет подтянуть слабые места.<br><br><strong>Программа:</strong><br>• 10 индивидуальных занятий по 1.5 часа<br>• Разбор всех типовых ошибок на экзамене<br>• Прогон маршрутов ГИБДД с инструктором<br>• Психологическая подготовка<br>• Дополнительные занятия на автодроме<br><br><strong>Результат:</strong> Уверенность на экзамене и отсутствие страха перед инспектором!<br><br><strong>💰 Стоимость:</strong> 9 900 ₽">
+                    <h3>Подготовка к экзамену</h3><p>Интенсив 10 занятий перед экзаменом в ГИБДД.</p><div class="price">9 900 ₽</div><button class="btn service-contact">Записаться</button>
+                </div>
+                <div class="card" data-modal-title="⚡ Экспресс-курс (B)" data-modal-body="Для тех, кто уже умеет водить, но нужны права!<br><br><strong>Для кого подходит:</strong><br>• Вы уже умеете уверенно водить автомобиль<br>• Вам нужна только отработка билетов ПДД<br>• Вы хотите быстро получить права<br><br><strong>Программа (3 недели):</strong><br>• Сжатый курс теории (только самое важное)<br>• Минимум практики (подтверждение навыков)<br>• Интенсивная подготовка к экзаменам<br><br><strong>Преимущества:</strong><br>• Быстрое обучение — всего 3 недели!<br>• Низкая стоимость<br>• Гибкий график занятий<br><br><strong>💰 Стоимость:</strong> 28 500 ₽">
+                    <h3>Экспресс-курс (B)</h3><p>Для тех, кто уже умеет ездить. 3 недели — и ты водитель!</p><div class="price">28 500 ₽</div><button class="btn service-contact">Подробнее</button>
+                </div>
+            </div>
+            <div style="background: rgba(255,220,240,0.4); border-radius: 30px; padding: 1.5rem; margin-top: 2rem;">
+                <p><strong>🔥 Мега-акция:</strong> скидка 15% при оплате полного курса (любая категория) до конца месяца + светоотражающий брелок в подарок.<br>📌 Рассрочка 0% на 3 месяца. 🎁 Каждому ученику — доступ к онлайн-тренажёру ПДД на месяц бесплатно!</p>
+            </div>
+        </div>
+
+        <!-- КОНТАКТЫ -->
+        <div id="contacts-page" class="page">
+            <h1>Контакты и запись</h1>
+            <div class="contact-grid">
+                <div>
+                    <div class="contact-detail"><strong>📍 Адрес:</strong> г. Москва, Брянская улица, 2</div>
+                    <div class="contact-detail"><strong>📞 Телефон:</strong> <a href="tel:+79878452995" style="color:#d43f8f;">+7 (987) 845-29-95</a></div>
+                    <div class="contact-detail"><strong>✉️ E-mail:</strong> <a href="mailto:Bez_tormozov@bk.ru" style="color:#d43f8f;">Bez_tormozov@bk.ru</a></div>
+                    <div class="contact-detail"><strong>🕒 Режим работы:</strong> ежедневно 9:00 – 21:00</div>
+                    <div class="contact-detail">
+                        <strong>🌐 Социальные сети:</strong><br>
+                        <a href="https://vk.com/id577783595" target="_blank" class="social-link">💙 ВКонтакте</a>
+                    </div>
+                    <div class="contact-detail"><strong>ИНН:</strong> 5035067810</div>
+                    <div class="contact-detail"><strong>ОГРН:</strong> 1127746123456</div>
+                    <div class="map-container"><div id="yandexMap" style="width:100%; height:280px;"></div></div>
+                </div>
+                <div style="background: rgba(255,240,250,0.7); backdrop-filter: blur(12px); border-radius: 40px; padding: 2rem;">
+                    <h3 style="margin-bottom:1rem; color:#d43f8f;">💬 Обратная связь</h3>
+                    <p>Оставьте заявку, и мы пригласим вас на бесплатный первый урок вождения!</p>
+                    <form id="feedbackForm">
+                        <div class="form-group"><input type="text" id="name" placeholder="Ваше имя" required></div>
+                        <div class="form-group"><input type="tel" id="phone" placeholder="Номер телефона" required></div>
+                        <div class="form-group"><input type="email" id="email" placeholder="E-mail"></div>
+                        <div class="form-group"><textarea id="message" placeholder="Категория, пожелания..."></textarea></div>
+                        <button type="submit" class="btn" style="width:100%;">🚀 Отправить заявку</button>
+                        <div id="formStatus" style="margin-top:1rem;"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 Автошкола «Без Тормозов» — вождение в удовольствие. Категории B, A, C, D — для настоящих драйверов.</p>
+        <p style="margin-top:0.5rem; font-size:0.75rem;">✨ Драйв, безопасность и свобода на дорогах ✨</p>
+    </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-title" id="modal-title"></div>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        // Модальное окно
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const closeModal = document.querySelector('.modal-close');
+
+        function openModal(title, body) {
+            modalTitle.innerHTML = title;
+            modalBody.innerHTML = body;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModalFunc() {
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        closeModal.addEventListener('click', closeModalFunc);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModalFunc();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('show')) closeModalFunc();
+        });
+
+        // Добавляем обработчики на карточки
+        function addCardClickHandlers(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const cards = container.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.removeEventListener('click', card._modalHandler);
+                const handler = function(e) {
+                    if (e.target.classList.contains('service-contact')) {
+                        return;
+                    }
+                    const title = card.getAttribute('data-modal-title');
+                    const body = card.getAttribute('data-modal-body');
+                    if (title && body) {
+                        openModal(title, body);
+                    }
+                };
+                card._modalHandler = handler;
+                card.addEventListener('click', handler);
+            });
+        }
+
+        addCardClickHandlers('why-us-cards');
+        addCardClickHandlers('principles-cards');
+        addCardClickHandlers('services-cards');
+
+        // Навигация
+        const pages = {
+            home: document.getElementById('home-page'),
+            about: document.getElementById('about-page'),
+            services: document.getElementById('services-page'),
+            contacts: document.getElementById('contacts-page')
+        };
+        const navBtns = document.querySelectorAll('.nav-btn');
+        function showPage(pageId) {
+            Object.values(pages).forEach(p => p?.classList.remove('active-page'));
+            if (pages[pageId]) pages[pageId].classList.add('active-page');
+            navBtns.forEach(btn => {
+                if (btn.getAttribute('data-page') === pageId) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (pageId === 'contacts' && typeof ymaps !== 'undefined' && document.getElementById('yandexMap')?.children.length === 0) setTimeout(() => { try { initMap(); } catch(e) {} }, 200);
+            setTimeout(() => {
+                addCardClickHandlers('why-us-cards');
+                addCardClickHandlers('principles-cards');
+                addCardClickHandlers('services-cards');
+            }, 100);
+        }
+        navBtns.forEach(btn => btn.addEventListener('click', () => { const pid = btn.getAttribute('data-page'); if (pid && pages[pid]) showPage(pid); }));
+        document.getElementById('logoLink')?.addEventListener('click', (e) => { e.preventDefault(); showPage('home'); });
+        document.getElementById('homeToContactBtn')?.addEventListener('click', () => showPage('contacts'));
+        document.getElementById('homeToServicesBtn')?.addEventListener('click', () => showPage('services'));
+        document.getElementById('aboutToContactBtn')?.addEventListener('click', () => showPage('contacts'));
+        document.querySelectorAll('.service-contact').forEach(btn => btn.addEventListener('click', (e) => { 
+            e.stopPropagation();
+            showPage('contacts'); 
+            setTimeout(() => document.querySelector('#contacts-page .contact-grid')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 150); 
+        }));
+        const form = document.getElementById('feedbackForm'), statusDiv = document.getElementById('formStatus');
+        if (form) form.addEventListener('submit', (e) => { e.preventDefault(); const name = document.getElementById('name')?.value.trim(), phone = document.getElementById('phone')?.value.trim(); if (!name || !phone) { statusDiv.innerHTML = '<div class="feedback-message" style="background:#ffe0e7; color:#c41e3a;">Пожалуйста, укажите имя и телефон 😊</div>'; return; } statusDiv.innerHTML = '<div class="feedback-message" style="background:#e9ecef;">Отправка...</div>'; setTimeout(() => { statusDiv.innerHTML = '<div class="feedback-message" style="background: linear-gradient(145deg, #ffe6f0, #d9f0ff); color:#b82b5c;">✅ Спасибо, ' + escapeHtml(name) + '! Мы перезвоним и подберём удобную категорию (B, C, D или A). 🎉</div>'; form.reset(); setTimeout(() => { if (statusDiv.innerHTML.includes('Спасибо')) statusDiv.innerHTML = ''; }, 6000); }, 800); });
+        function escapeHtml(str) { return str.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+        showPage('home');
+    </script>
+</body>
+</html>
